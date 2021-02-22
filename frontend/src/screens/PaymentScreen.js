@@ -39,7 +39,7 @@ const PaymentScreen = ({ history }) => {
               type='radio'
               label='PayPal or Credit Card'
               id='PayPal'
-              name='paymentMehtod'
+              name='paymentMethod'
               value='PayPal'
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
@@ -48,7 +48,7 @@ const PaymentScreen = ({ history }) => {
               type='radio'
               label='Stripe'
               id='Stripe'
-              name='paymentMehtod'
+              name='paymentMethod'
               value='Stripe'
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
