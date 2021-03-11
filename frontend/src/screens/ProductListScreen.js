@@ -43,7 +43,7 @@ const ProductListScreen = ({ history, match }) => {
     }
 
     if (successCreate) {
-      history.push(`/admin/products/${createdProduct._id}/edit`);
+      history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
       dispatch(listProducts());
     }
@@ -62,9 +62,8 @@ const ProductListScreen = ({ history, match }) => {
     }
   };
 
-  const createProductHandler = (product) => {
-    dispatch(createProduct(product));
-    console.log('handler');
+  const createProductHandler = () => {
+    dispatch(createProduct());
   };
 
   return (
