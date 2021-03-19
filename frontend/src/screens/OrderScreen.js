@@ -26,8 +26,6 @@ const OrderScreen = ({ match, history }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
-  //console.log('order', order);
-
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
@@ -55,6 +53,13 @@ const OrderScreen = ({ match, history }) => {
     dispatch(payOrder(orderId, paymentResult));
   };
 
+  //if (orderId !== order._id) {
+  //  dispatch({ type: ORDER_DETAILS_REQUEST });
+  // }
+
+  //console.log(match.params.id);
+  //console.log(order._id);
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
@@ -71,6 +76,11 @@ const OrderScreen = ({ match, history }) => {
       };
       document.body.appendChild(script);
     };
+
+    if (order && orderId !== order._id) {
+      //console.log('not match');
+      dispatch(getOrderDetails(orderId));
+    }
 
     if (!order || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
