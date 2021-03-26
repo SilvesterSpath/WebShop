@@ -10,7 +10,7 @@ node_modules/
 /coverage
 
 # production
-/build
+/frontend/build
 
 # misc (the .env (environmental variables) could contain sensitive information)
 .DS_Store
