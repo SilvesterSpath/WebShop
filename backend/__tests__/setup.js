@@ -8,11 +8,7 @@ export async function setupDatabase() {
   mongod = await MongoMemoryServer.create();
   process.env.MONGO_URI = mongod.getUri();
   process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-jwt-secret';
-  await mongoose.connect(process.env.MONGO_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
+  await mongoose.connect(process.env.MONGO_URI);
 }
 
 export async function teardownDatabase() {
