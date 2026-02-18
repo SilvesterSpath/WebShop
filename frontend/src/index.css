@@ -26,15 +26,15 @@ body {
   background: #f3f3f3;
 }
 
-#Navbar {
-  background-color: red;
-}
-
 .card {
   background-color: #cacaca;
 }
 
-/*changing the navbar color in bootstrap.css .bg-dark:*/
+/* override navbar to use a true black tone */
+.navbar-dark.bg-dark {
+  background-color: #070221 !important;
+  border-color: #000000;
+}
 
 /* carousel */
 .carousel-item-next,
