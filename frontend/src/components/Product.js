@@ -5,23 +5,24 @@ import Rating from './Rating';
 
 const Product = ({ product }) => {
   return (
-    <Card className='my-3 p-3 rounded'>
-      <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant='top' />
+    <Card className='product-card my-3'>
+      <Link to={`/product/${product._id}`} className='d-block'>
+        <Card.Img src={product.image} variant='top' className='product-image' />
       </Link>
-      <Card.Body>
+      <Card.Body className='product-content'>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as='div'>
-            <strong>{product.name}</strong>
+          <Card.Title as='div' className='product-title'>
+            {product.name}
           </Card.Title>
         </Link>
-        <Card.Text as='div'>
+        <Card.Text as='div' className='product-rating rating-stars'>
           <Rating
             value={product.rating}
             text={`${product.numReviews} reviews`}
+            color='#f59e0b'
           />
         </Card.Text>
-        <Card.Text as='h3'>${product.price}</Card.Text>
+        <Card.Text as='div' className='product-price'>${product.price}</Card.Text>
       </Card.Body>
     </Card>
   );

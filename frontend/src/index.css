@@ -16,6 +16,14 @@ h3 {
   padding: 1rem 0;
 }
 
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 0;
+  margin-top: 3.5rem;
+}
+
 .rating span {
   margin: 0.1rem;
 }
@@ -23,43 +31,185 @@ h3 {
 /* these are changing the blue design */
 
 body {
-  background: #f3f3f3;
+  background: #f8fafc;
 }
 
 .card {
-  background-color: #cacaca;
+  background-color: white;
 }
 
-/* override navbar to use a true black tone */
+.product-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  display: block;
+  background: transparent;
+}
+
+.product-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.product-rating {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+.rating-stars {
+  color: #f59e0b;
+  font-size: 0.85rem;
+}
+.rating-stars i {
+  color: #f59e0b !important;
+  font-size: 0.85rem;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.product-content {
+  padding: 20px 22px 24px;
+}
+
+/* modern header: slimmer, softer navy, subtle shadow */
+.navbar {
+  padding: 0.6rem 0;
+}
 .navbar-dark.bg-dark {
-  background-color: #070221 !important;
-  border-color: #000000;
+  background-color: #0f172a !important;
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* carousel */
-.carousel-item-next,
-.carousel-item-prev,
-.carousel-item.active {
-  background-color: #cacaca;
+/* carousel – compact hero: image left, name + price right, ~30% shorter */
+.carousel-hero,
+.carousel-hero .carousel-item-next,
+.carousel-hero .carousel-item-prev,
+.carousel-hero .carousel-item.active {
+  background-color: white;
   display: flex;
 }
-.carousel-caption {
-  position: absolute;
-  top: 0;
+.carousel-hero .carousel-item {
+  min-height: 0;
+}
+.carousel-slide-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 140px;
+  max-height: 160px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+.carousel-slide-media {
+  flex: 0 0 38%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.carousel-slide-media img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  display: block;
+}
+.carousel-slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+.carousel-slide-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+  line-height: 1.3;
+  margin: 0;
+}
+.carousel-slide-name:hover {
+  text-decoration: underline;
+  color: #0f172a;
+}
+.carousel-slide-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+@media (max-width: 576px) {
+  .carousel-slide-inner {
+    flex-direction: column;
+    min-height: 120px;
+    max-height: none;
+    padding: 12px;
+  }
+  .carousel-slide-media {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .carousel-slide-media img {
+    height: 100px;
+  }
 }
 
-.carousel-caption h2 {
-  color: black;
+/* Carousel arrows – gray so they’re visible on white */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: brightness(0);
+  opacity: 0.6;
+}
+.carousel-control-next:hover .carousel-control-next-icon,
+.carousel-control-prev:hover .carousel-control-prev-icon {
+  opacity: 0.9;
 }
 
-.carousel img {
-  height: 200px;
-  padding: 30px;
-  margin: 30px;
-  border-radius: 20%;
-  margin-left: auto;
-  margin-right: auto;
+/* Hide carousel indicators (hero uses arrows only) */
+.carousel-hero .carousel-indicators {
+  display: none !important;
 }
-.carousel a {
-  margin: 0 auto;
+
+/* minimal pagination */
+.pagination .page-link,
+.pagination button {
+  border: none;
+  background: transparent;
+}
+.pagination .page-link:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+.pagination .page-item.active .page-link {
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  font-weight: 600;
+  border-bottom: 2px solid #0f172a;
+  border-radius: 0;
 }
