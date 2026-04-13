@@ -22,7 +22,9 @@ const Product = ({ product }) => {
             color='#f59e0b'
           />
         </Card.Text>
-        <Card.Text as='div' className='product-price'>${product.price}</Card.Text>
+        <Card.Text as='div' className='product-price'>
+          ${product.price}
+        </Card.Text>
       </Card.Body>
     </Card>
   );
