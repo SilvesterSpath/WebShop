@@ -53,7 +53,8 @@ describe('User API', () => {
         .post('/api/users')
         .send({ name: 'No Email', password: 'pass' });
 
-      expect(res.status).toBe(500);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message');
     });
   });
 

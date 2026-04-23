@@ -11,15 +11,24 @@ import {
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import { authLimiter } from '../middleware/rateLimitMiddleware.js';
+import { validateBody } from '../middleware/validateRequest.js';
+import {
+  registerUserSchema,
+  loginUserSchema,
+  updateProfileSchema,
+} from '../validation/userSchemas.js';
 
 const router = express.Router();
 
-router.route('/').post(authLimiter, registerUser).get(protect, admin, getUsers);
-router.post('/login', authLimiter, authUser);
+router
+  .route('/')
+  .post(authLimiter, validateBody(registerUserSchema), registerUser)
+  .get(protect, admin, getUsers);
+router.post('/login', authLimiter, validateBody(loginUserSchema), authUser);
 router
   .route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .put(protect, validateBody(updateProfileSchema), updateUserProfile);
 
 router
   .route('/:id')
