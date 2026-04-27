@@ -10,6 +10,8 @@ jobs:
   sanity:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -37,7 +39,5 @@ jobs:
         run: npm run build
 
       - name: Security Scan (Snyk)
-        if: ${{ secrets.SNYK_TOKEN != '' }}
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        if: ${{ env.SNYK_TOKEN != '' }}
         run: npm run security:test
