@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { errorHandler } from '../middleware/errorMiddleware.js';
 
 const createMockRes = (statusCode = 200) => {
