@@ -1,6 +1,17 @@
 import Order from '../models/orderModel.js';
 import asyncHandler from 'express-async-handler';
 
+const canAccessOrder = (order, user) => {
+  if (!order || !user) return false;
+  if (user.isAdmin) return true;
+
+  const orderOwnerId =
+    order.user && order.user._id ? order.user._id.toString() : order.user.toString();
+  const requesterId = user._id.toString();
+
+  return orderOwnerId === requesterId;
+};
+
 // @desc    Create new Order
 // @route   POST /api/orders
 // @access  Private
@@ -46,6 +57,10 @@ const getOrderById = asyncHandler(async (req, res) => {
     'name email'
   );
   if (order) {
+    if (!canAccessOrder(order, req.user)) {
+      res.status(403);
+      throw new Error('Not authorized to access this order');
+    }
     res.json(order);
     //console.log(order);
   } else {
@@ -60,6 +75,10 @@ const getOrderById = asyncHandler(async (req, res) => {
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
+    if (!canAccessOrder(order, req.user)) {
+      res.status(403);
+      throw new Error('Not authorized to update this order');
+    }
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {

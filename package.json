@@ -26,7 +26,7 @@
   "author": "SilvesterSpath",
   "license": "ISC",
   "engines": {
-    "node": "16.14.0"
+    "node": "20.x"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
