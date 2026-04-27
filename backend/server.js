@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from './config/db.js';
+import { initSentry } from './config/sentry.js';
 import app from './app.js';
 
 dotenv.config();
+initSentry();
 
 connectDB();
 

@@ -1,5 +1,6 @@
 import Order from '../models/orderModel.js';
 import asyncHandler from 'express-async-handler';
+import { logSecurityEvent } from '../utils/securityLogger.js';
 
 const canAccessOrder = (order, user) => {
   if (!order || !user) return false;
@@ -58,6 +59,13 @@ const getOrderById = asyncHandler(async (req, res) => {
   );
   if (order) {
     if (!canAccessOrder(order, req.user)) {
+      logSecurityEvent('warn', 'order.access_forbidden', {
+        route: req.originalUrl,
+        method: req.method,
+        orderId: req.params.id,
+        userId: req.user?._id?.toString(),
+        reason: 'owner_or_admin_required',
+      });
       res.status(403);
       throw new Error('Not authorized to access this order');
     }
@@ -76,6 +84,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
     if (!canAccessOrder(order, req.user)) {
+      logSecurityEvent('warn', 'order.pay_forbidden', {
+        route: req.originalUrl,
+        method: req.method,
+        orderId: req.params.id,
+        userId: req.user?._id?.toString(),
+        reason: 'owner_or_admin_required',
+      });
       res.status(403);
       throw new Error('Not authorized to update this order');
     }
@@ -89,6 +104,15 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     };
 
     const updatedOrder = await order.save();
+
+    logSecurityEvent('info', 'order.paid_updated', {
+      route: req.originalUrl,
+      method: req.method,
+      orderId: updatedOrder._id.toString(),
+      userId: req.user?._id?.toString(),
+      isAdmin: Boolean(req.user?.isAdmin),
+      isPaid: updatedOrder.isPaid,
+    });
 
     res.json(updatedOrder);
   } else {
