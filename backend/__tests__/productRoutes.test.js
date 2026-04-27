@@ -68,7 +68,12 @@ describe('Product API', () => {
   });
 
   describe('GET /api/products/:id', () => {
-    it('returns 404 for invalid id', async () => {
+    it('returns 400 for malformed id', async () => {
+      const res = await request(app).get('/api/products/not-an-object-id');
+      expect(res.status).toBe(400);
+    });
+
+    it('returns 404 when product does not exist', async () => {
       const res = await request(app).get(
         '/api/products/507f1f77bcf86cd799439011'
       );
@@ -112,6 +117,40 @@ describe('Product API', () => {
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body)).toBe(true);
       expect(res.body.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Validation hardening', () => {
+    it('returns 400 for invalid query params', async () => {
+      const res = await request(app).get('/api/products?pageNumber=0');
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message');
+    });
+
+    it('returns 400 for invalid review payload', async () => {
+      const res = await request(app)
+        .post('/api/products/507f1f77bcf86cd799439011/reviews')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({
+          rating: 7,
+          comment: '',
+        });
+
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message');
+    });
+
+    it('returns 400 for invalid product update payload', async () => {
+      const res = await request(app)
+        .put('/api/products/507f1f77bcf86cd799439011')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({
+          name: '',
+          price: -1,
+        });
+
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message');
     });
   });
 
