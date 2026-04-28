@@ -33,6 +33,12 @@ h3 {
 body {
   background: #f8fafc;
 }
+:root {
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --ease-modern: cubic-bezier(0.22, 1, 0.36, 1);
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.35);
+}
 
 .card {
   background-color: white;
@@ -40,11 +46,11 @@ body {
 
 .product-card {
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 260ms var(--ease-modern),
+    box-shadow 260ms var(--ease-modern);
   overflow: hidden;
 }
 
@@ -55,7 +61,7 @@ body {
 
 .product-image {
   width: 100%;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   display: block;
   background: transparent;
 }
@@ -93,14 +99,68 @@ body {
   padding: 20px 22px 24px;
 }
 
-/* modern header: slimmer, softer navy, subtle shadow */
+/* modern header / top ribbon refresh */
 .navbar {
   padding: 0.6rem 0;
 }
-.navbar-dark.bg-dark {
-  background-color: #0f172a !important;
+header .navbar-dark.bg-dark {
+  background: rgba(15, 23, 42, 0.92) !important;
   border-color: transparent;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.25);
+  padding: 0.7rem 0;
+}
+header {
+  position: relative;
+  z-index: 1030;
+}
+header .navbar {
+  position: relative;
+  z-index: 1031;
+}
+header .dropdown-menu {
+  z-index: 1040;
+}
+header .navbar-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+header .navbar-dark .navbar-nav .nav-link {
+  color: #e2e8f0;
+  transition:
+    color 220ms var(--ease-modern),
+    opacity 220ms var(--ease-modern);
+}
+header .navbar-dark .navbar-nav .nav-link:hover,
+header .navbar-dark .navbar-nav .nav-link:focus {
+  color: #ffffff;
+}
+header form.d-flex input.form-control {
+  min-width: 220px;
+  border: 1px solid #334155;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  background: #f8fafc;
+}
+header form.d-flex input.form-control:focus {
+  border-color: #475569;
+  box-shadow: none;
+}
+header form.d-flex .btn-outline-light {
+  border: 1px solid #334155;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: #0b1220;
+  color: #ffffff;
+  transition:
+    background-color 220ms var(--ease-modern),
+    border-color 220ms var(--ease-modern),
+    color 220ms var(--ease-modern);
+}
+header form.d-flex .btn-outline-light:hover,
+header form.d-flex .btn-outline-light:focus {
+  border-color: #475569;
+  background: #1e293b;
+  color: #ffffff;
 }
 
 /* carousel – compact hero: image left, name + price right, ~30% shorter */
@@ -110,6 +170,13 @@ body {
 .carousel-hero .carousel-item.active {
   background-color: white;
   display: flex;
+}
+.carousel-hero {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 .carousel-hero .carousel-item {
   min-height: 0;
@@ -185,9 +252,33 @@ body {
   filter: brightness(0);
   opacity: 0.6;
 }
+.carousel-hero .carousel-control-prev,
+.carousel-hero .carousel-control-next {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-modern);
+}
+.carousel-hero:hover .carousel-control-prev,
+.carousel-hero:hover .carousel-control-next,
+.carousel-hero:focus-within .carousel-control-prev,
+.carousel-hero:focus-within .carousel-control-next {
+  opacity: 1;
+}
 .carousel-control-next:hover .carousel-control-next-icon,
 .carousel-control-prev:hover .carousel-control-prev-icon {
   opacity: 0.9;
+}
+
+header .navbar-brand:focus-visible,
+header .navbar-dark .navbar-nav .nav-link:focus-visible,
+header .dropdown-item:focus-visible,
+header form.d-flex input.form-control:focus-visible,
+header form.d-flex .btn-outline-light:focus-visible,
+.carousel-hero .carousel-control-prev:focus-visible,
+.carousel-hero .carousel-control-next:focus-visible,
+.carousel-slide-name:focus-visible,
+.pagination .page-link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 /* Hide carousel indicators (hero uses arrows only) */
